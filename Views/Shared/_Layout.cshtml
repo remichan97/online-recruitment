@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - Online Recruitment System</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Recruitment System", "Index", "Home", new { area = "" }, new { @class =
+                    "navbar-brand" })
+                </div>
+            </div>
+        </div>
+        <div class="container body-content col-lg-9">
+            @if(@TempData["Completed"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Completed"]
+                </div>
+            }
+            @RenderBody()
+            <hr />
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">User Panel</div>
+                <div class="panel-body">
+                    You are currently signed in as <span style="font-weight: bold">@User.Identity.Name</span>
+                </div>
+                <div class="panel-footer">
+                    <div class="btn-group">
+                        <button class="btn btn-danger" onclick="location.href='@Url.Action("SignOut", "SignIn")'">Sign
+                            Out</button>
+                        <button class="btn btn-primary" onclick="location.href='@Url.Action("Index", "ChangePassword")'">Change Password</button>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", "UpdateInfo")'">Update Information</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Menu</div>
+                    <ul class="list-group">
+                        <li class="list-group-item">@Html.ActionLink("Manage Departments", "Index", "Departments")</li>
+                        <li class="list-group-item">@Html.ActionLink("Manage Employees", "Index", "Employees")</li>
+                        <li class="list-group-item">@Html.ActionLink("Manage Vacancies", "Index", "Vacancies")</li>
+                        <li class="list-group-item">@Html.ActionLink("Manage Applicants", "Index", "Applicants")</li>
+                        <li class="list-group-item">@Html.ActionLink("Interview Listing", "Index", "Interviews")</li>
+                    </ul>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Help</div>
+                <div class="panel-body">
+                    @ViewBag.Help
+                </div>
+            </div>
+            <footer>
+                <p>&copy; @DateTime.Now.Year - ABC Company</p>
+            </footer>
+        </div>
+
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    </body>
+
+</html>

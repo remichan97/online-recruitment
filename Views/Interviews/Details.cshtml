@@ -1,0 +1,137 @@
+﻿@model online_recruitment.Models.InterviewDTO
+
+@{
+    ViewBag.Title = "Interview Scheduling";
+    ViewBag.Help = "Here you can schedule interview for the selected applicant. You need to provide when the interview will take place. How long will the interview last by specifying the start time and the end time";
+}
+
+<h2>Schedule the Interview</h2>
+
+<div>
+    <h4>Candidate Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Applicant Full Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.PhoneNumber)
+        </dd>
+
+        <dt>
+            Desired Department
+        </dt>
+        @Html.DisplayFor(model => model.Applicant.Department.Name)
+        <dd>
+            <input type="button" value="View Applicant CV File" class="btn btn-primary" onclick="window.open('@Url.Action("OpenCvFile", "Applicants", new {id = Model.Applicant.Id})')">
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <h4>Interviewer Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Interviewer Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interview.Employee.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interview.Employee.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interview.Employee.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interview.Employee.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interview.Employee.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+
+<h4>Interview Scheduling</h4>
+@using (Html.BeginForm("Interview","Interviews",FormMethod.Post))
+{
+    @Html.LabelFor(model => model.Interview.InterviewDate, "Set the Interview Date", new {@class = "control-label col-md-2"})
+<div class="col-md-10">
+    @Html.EditorFor(model => model.Interview.InterviewDate, new {htmlAttribute = new {@class = "form-control datepicker"}})
+    @Html.ValidationMessageFor(model => model.Interview.InterviewDate, "", new {@class = "text-danger"})
+</div>
+    @Html.LabelFor(model => model.Interview.StartTime, htmlAttributes: new {@class = "control-label col-md-2"})
+<div class="col-md-10">
+    @Html.EditorFor(model => model.Interview.StartTime, new {htmlAttribute = new {@class = "form-control timepickerStart"}})
+    @Html.ValidationMessageFor(model => model.Interview.StartTime, "", new {@class = "text-danger"})
+</div>
+    @Html.LabelFor(model => model.Interview.EndTime,htmlAttributes: new {@class = "control-label col-md-2"})
+<div class="col-md-10">
+    @Html.EditorFor(model => model.Interview.EndTime, new {htmlAttribute = new {@class = "form-control timepickerEnd"}})
+    @Html.ValidationMessageFor(model => model.Interview.EndTime, "", new {@class = "text-danger"})
+</div>
+}
+
+
+@section scripts {
+    <script src="~/Scripts/jquery-ui-1.13.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd-mm-yy",
+                changemonth: true,
+                changeyear: true
+            });
+        });
+        $(document).ready(function () {
+            $('input.timepickerStart').timepicker({
+                timeFormat: 'HH:mm',
+                interval: 30,
+                minTime: '09',
+                maxTime: '23:00',
+                defaultTime: '11',
+                startTime: '01:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+        });
+        $(document).ready(function () {
+            $('input.timepickerEnd').timepicker({
+                timeFormat: 'HH:mm',
+                interval: 30,
+                minTime: '09',
+                maxTime: '23:00',
+                defaultTime: '11',
+                startTime: '01:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+        });
+    </script>
+}

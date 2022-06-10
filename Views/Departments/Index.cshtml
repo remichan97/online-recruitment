@@ -1,0 +1,34 @@
+﻿@model IEnumerable<online_recruitment.Models.Department>
+
+@{
+    ViewBag.Title = "Departments";
+    ViewBag.Help = "This is the Department Listing, where you can manage available departments for any Vacancy, Employees. These Vacancy also treated as desired jobs for any Applicants as well";
+}
+
+<h2>Department Listing</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit","Departments", new {id = item.Id})" class="btn btn-primary" title="Edit"><i class="fa-solid fa-pen"></i></a> 
+            
+            <a href="@Url.Action("Delete", "Departments", new {id = item.Id})" class="btn btn-danger" title="Delete"><i class="fa-solid fa-trash"></i></a>
+        </td>
+    </tr>
+}
+
+</table>

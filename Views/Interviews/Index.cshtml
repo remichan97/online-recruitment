@@ -1,0 +1,80 @@
+﻿@model IEnumerable<online_recruitment.Models.Interview>
+
+@{
+    ViewBag.Title = "Interviews";
+    ViewBag.Help = "This is the Interview listing screen, here you can schedule interview for the candidate, accept or decline candidate when their interview is scheduled";
+}
+
+<h2>Interviews</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Applicant.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vacancy.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AttachedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterviewDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterviewStatu.Name)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Applicant.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vacancy.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttachedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InterviewStatu.Name)
+            </td>
+
+            <td>
+                @switch (item.Status)
+                {
+                    case 4:
+                        <a href="@Url.Action("Details", "Interviews", new {id = item.Id})" class="btn btn-primary" title="Schedule Interview"><i class="fa-solid fa-calendar-check"></i></a>
+                        break;
+                    case 1:
+                        <a href="@Url.Action("AcceptInterview", "Interviews", new {id = item.Id})" class="btn btn-success" title="Accept this Candidate"><i class="fa-solid fa-check"></i></a>
+                        <a href="@Url.Action("RejectInterview", "Interviews", new {id = item.Id})" class="btn btn-danger" title="Reject this Candidate"><i class="fa-solid fa-xmark"></i></a>
+                        break;
+                }
+            </td>
+        </tr>
+    }
+
+</table>

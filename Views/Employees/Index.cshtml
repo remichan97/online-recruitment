@@ -1,0 +1,79 @@
+﻿@model PagedList.IPagedList<online_recruitment.Models.Employee>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Employee";
+    ViewBag.Help = "This is the Employee Managing screen. Here you can create new employee credential, update existing one, reset their user account password, or remove access to the system by deleting their respective user account";
+}
+
+<h2>Employee Listing</h2>
+
+<p>
+    <a class="btn btn-primary" role="button" onclick="location.href = '@Url.Action("Create", "Employees")'">Add new Employee</a>
+</p>
+
+@using (Html.BeginForm("Index", "Employees", FormMethod.Get))
+{
+    <p>
+        Find by name or username: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search"  class="btn btn-primary"/>
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        <th>
+            Email Address
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            Current Role
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.Name)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","Employees", new {id = item.Id})" class="btn btn-primary" title="Edit"><i class="fa-solid fa-pen"></i></a>
+                 
+                <a href="@Url.Action("ResetPassword", "Employees", new {id = item.Id})" class="btn btn-warning" title="Reset Password" onclick="return confirm('Would you like to reset this user account Password?');"><i class="fa-solid fa-arrow-rotate-right"></i></a> 
+                <a href="@Url.Action("Delete", "Employees", new {id = item.Id})" class="btn btn-danger" title="Delete"><i class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new {page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))

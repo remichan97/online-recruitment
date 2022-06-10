@@ -1,0 +1,64 @@
+﻿@model IEnumerable<online_recruitment.Models.Applicant>
+
+@{
+    ViewBag.Title = "Applicants Listing";
+    ViewBag.Help = "";
+}
+
+<h2>Applicants</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Desired Department
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicantStatu.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","Applicants", new {id = item.Id})" class="btn btn-primary" title="Edit Applicant Info"><i class="fa-solid fa-pen"></i></a>
+                <a href="@Url.Action("OpenCvFile", "Applicants", new {id = item.Id})" class="btn btn-primary" title="View Applicant CV"><i class="fa-solid fa-eye"></i></a>
+                @if (item.Status != 4)
+                {
+                    <a href="@Url.Action("BanApplicant", "Applicants", new {id = item.Id})" class="btn btn-danger" title="Ban this Applicant" onclick="return confirm('Are you sure you want to ban this Applicant? This will automatically rejects all their pending interviews and the person will no longer be able to assign into new vacancy.');"><i class="fa-solid fa-ban"></i></a>
+                    <a href="@Url.Action("Details", "Applicants", new {id = item.Id})" , class="btn btn-primary" title="Assign Vacancy"><i class="fa-solid fa-object-union"></i></a>
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>

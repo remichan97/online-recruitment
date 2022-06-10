@@ -1,0 +1,50 @@
+﻿@model online_recruitment.Models.UpdateInfo
+
+@{
+    ViewBag.Title = "Update Information";
+}
+
+<h2>Update your Information</h2>
+
+@using (@Html.BeginForm("Update", "UpdateInfo", FormMethod.Post))
+{
+@Html.AntiForgeryToken()
+if(@ViewData["Fail"] != null)
+{
+<div class="alert alert-danger">
+    @ViewData["Fail"]
+</div>
+}
+
+<div class="form-group">
+    @Html.LabelFor(m => m.FullName, htmlAttributes: new { @class = "col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.FullName, new { htmlAttribute = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.Email, new { htmlAttribute = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.PhoneNumber, htmlAttributes: new { @class = "col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.PhoneNumber, new { htmlAttribute = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <input type="submit" class="btn btn-primary" value="Save Changes">
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,49 @@
+﻿@model online_recruitment.Models.ChangePassword
+
+@{
+    ViewBag.Title = "Change Password";
+    ViewBag.Help = "Here you can update your account password. To reset yyour password, you need to provide your previous one as a way to make sure you are the owner of the account. Should you have forgot your old password, please contact your system administrator to have your account password reset";
+}
+
+<h2>Change your Password</h2>
+
+
+@using (@Html.BeginForm("ChangePassword", "ChangePassword", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    if (ViewData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @ViewData["Error"]
+        </div>
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.OldPassword, htmlAttributes: new { @class = "col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.OldPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.OldPassword, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NewPassword, htmlAttributes: new { @class = "col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.NewPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NewPassword, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Change Password">
+    </div>
+
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

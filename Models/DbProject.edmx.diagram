@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b3146b1d419b4b1e8423dbfba23e5862" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Applicant" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ApplicantStatu" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Department" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Employee" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Interview" Width="1.5" PointX="8.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.InterviewStatu" Width="1.5" PointX="6" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Vacancy" Width="1.5" PointX="11.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.VacancyStatu" Width="1.5" PointX="9" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK__Applicant__Depar__0697FACD" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Applicant__Statu__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Interview__Appli__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Employee__Depart__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Vacancy__Departm__73852659" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Employee__RoleId__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Vacancy__Employe__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Interview__Statu__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Interview__Vacan__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Vacancy__Status__46E78A0C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

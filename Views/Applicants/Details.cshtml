@@ -1,0 +1,61 @@
+﻿@model online_recruitment.Models.AssignVacant
+
+@{
+    ViewBag.Title = "Assign Vacant";
+    ViewBag.Help = "Here you can assign a vacant for the applicant. The applicant shown here are those matches the applicant desired departments only";
+}
+
+<h2>Assign Vacant</h2>
+
+<div>
+    <h4>Applicant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.applicant.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.applicant.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.applicant.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.applicant.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.applicant.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.applicant.Email)
+        </dd>
+
+        <dt>
+            Desired Department
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.applicant.Department.Name)
+        </dd>
+
+        <dd>
+            <input type="button" value="View Applicant CV File" class="btn btn-primary" onclick="window.open('@Url.Action("OpenCvFile", "Applicants", new {id = Model.applicant.Id})')">
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <p>Below is the list of available vacancies suitable for this Applicant. Please select one to assign to the Applicant above</p>
+    <ul>
+        @foreach (var item in Model.vacancies)
+        {
+            <li>@Html.ActionLink(item.VacancyName, "Assign Vacancy", new {id = Model.applicant.Id, vacant = item.VacancyName})</li>
+        }
+    </ul>
+</div>

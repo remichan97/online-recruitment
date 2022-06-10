@@ -1,0 +1,903 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Applicant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="CvFile" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApplicantStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Interview">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ApplicantId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="VacancyId" Type="int" Nullable="false" />
+          <Property Name="AttachedDate" Type="date" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="InterviewDate" Type="date" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="InterviewStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vacancy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="ClosingDate" Type="date" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="AppliedQuantity" Type="int" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" />
+        </EntityType>
+        <EntityType Name="VacancyStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK__Applicant__Depar__0697FACD">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Applicant" Type="Self.Applicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Applicant">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Applicant__Statu__4D94879B">
+          <End Role="ApplicantStatus" Type="Self.ApplicantStatus" Multiplicity="1" />
+          <End Role="Applicant" Type="Self.Applicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicantStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Applicant">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__Depart__3B75D760">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__RoleId__6E01572D">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interview__Appli__5441852A">
+          <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="ApplicantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interview__Statu__5AEE82B9">
+          <End Role="InterviewStatus" Type="Self.InterviewStatus" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InterviewStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interview__Vacan__5629CD9C">
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacancy">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="VacancyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacancy__Departm__73852659">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vacancy">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacancy__Employe__45F365D3">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vacancy">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacancy__Status__46E78A0C">
+          <End Role="VacancyStatus" Type="Self.VacancyStatus" Multiplicity="1" />
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VacancyStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vacancy">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_AcceptCandidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="applicantId" Type="int" Mode="In" />
+          <Parameter Name="vacancyId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AssignVacancy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="applicantID" Type="int" Mode="In" />
+          <Parameter Name="vacancyId" Type="int" Mode="In" />
+          <Parameter Name="employeeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_banApplicant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ChangePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oldpassword" Type="varchar" Mode="In" />
+          <Parameter Name="newpassword" Type="varchar" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_CreateApplicant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="phonenumber" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="departmentId" Type="int" Mode="In" />
+          <Parameter Name="cvfile" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_CreateNewEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="departmentId" Type="int" Mode="In" />
+          <Parameter Name="fullname" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="phonenumber" Type="varchar" Mode="In" />
+          <Parameter Name="roleId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CreateVacancy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="description" Type="text" Mode="In" />
+          <Parameter Name="closingdate" Type="date" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="employeeId" Type="int" Mode="In" />
+          <Parameter Name="departmentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_EditApplicant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="phonenumber" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="departmentId" Type="int" Mode="In" />
+          <Parameter Name="status" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_EditEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="departmentId" Type="int" Mode="In" />
+          <Parameter Name="fullname" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="phonenumber" Type="varchar" Mode="In" />
+          <Parameter Name="roleId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_EditVacancy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="description" Type="text" Mode="In" />
+          <Parameter Name="closingdate" Type="date" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="departmentID" Type="int" Mode="In" />
+          <Parameter Name="status" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RejectCandidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="applicantId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_resetPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="pw" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ScheduleInterview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="interviewdate" Type="date" Mode="In" />
+          <Parameter Name="starttime" Type="time" Mode="In" />
+          <Parameter Name="endtime" Type="time" Mode="In" />
+          <Parameter Name="applicantId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fullname" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="phonenumber" Type="varchar" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Applicant" EntityType="Self.Applicant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicantStatus" EntityType="Self.ApplicantStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Interview" EntityType="Self.Interview" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InterviewStatus" EntityType="Self.InterviewStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vacancy" EntityType="Self.Vacancy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VacancyStatus" EntityType="Self.VacancyStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Applicant__Depar__0697FACD" Association="Self.FK__Applicant__Depar__0697FACD">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Applicant" EntitySet="Applicant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Applicant__Statu__4D94879B" Association="Self.FK__Applicant__Statu__4D94879B">
+            <End Role="ApplicantStatus" EntitySet="ApplicantStatus" />
+            <End Role="Applicant" EntitySet="Applicant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Depart__3B75D760" Association="Self.FK__Employee__Depart__3B75D760">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__RoleId__6E01572D" Association="Self.FK__Employee__RoleId__6E01572D">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interview__Appli__5441852A" Association="Self.FK__Interview__Appli__5441852A">
+            <End Role="Applicant" EntitySet="Applicant" />
+            <End Role="Interview" EntitySet="Interview" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interview__Statu__5AEE82B9" Association="Self.FK__Interview__Statu__5AEE82B9">
+            <End Role="InterviewStatus" EntitySet="InterviewStatus" />
+            <End Role="Interview" EntitySet="Interview" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interview__Vacan__5629CD9C" Association="Self.FK__Interview__Vacan__5629CD9C">
+            <End Role="Vacancy" EntitySet="Vacancy" />
+            <End Role="Interview" EntitySet="Interview" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacancy__Departm__73852659" Association="Self.FK__Vacancy__Departm__73852659">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Vacancy" EntitySet="Vacancy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacancy__Employe__45F365D3" Association="Self.FK__Vacancy__Employe__45F365D3">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Vacancy" EntitySet="Vacancy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacancy__Status__46E78A0C" Association="Self.FK__Vacancy__Status__46E78A0C">
+            <End Role="VacancyStatus" EntitySet="VacancyStatus" />
+            <End Role="Vacancy" EntitySet="Vacancy" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Employee" Association="Self.fk_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Interview" EntitySet="Interview" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Applicant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="CvFile" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Applicant__Depar__0697FACD" FromRole="Applicant" ToRole="Department" />
+          <NavigationProperty Name="ApplicantStatu" Relationship="Self.FK__Applicant__Statu__4D94879B" FromRole="Applicant" ToRole="ApplicantStatus" />
+          <NavigationProperty Name="Interviews" Relationship="Self.FK__Interview__Appli__5441852A" FromRole="Applicant" ToRole="Interview" />
+        </EntityType>
+        <EntityType Name="ApplicantStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Applicants" Relationship="Self.FK__Applicant__Statu__4D94879B" FromRole="ApplicantStatus" ToRole="Applicant" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Applicants" Relationship="Self.FK__Applicant__Depar__0697FACD" FromRole="Department" ToRole="Applicant" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Depart__3B75D760" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="Vacancies" Relationship="Self.FK__Vacancy__Departm__73852659" FromRole="Department" ToRole="Vacancy" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Employee__Depart__3B75D760" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Employee__RoleId__6E01572D" FromRole="Employee" ToRole="Roles" />
+          <NavigationProperty Name="Vacancies" Relationship="Self.FK__Vacancy__Employe__45F365D3" FromRole="Employee" ToRole="Vacancy" />
+          <NavigationProperty Name="Interviews" Relationship="Self.fk_Employee" FromRole="Employee" ToRole="Interview" />
+        </EntityType>
+        <EntityType Name="Interview">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicantId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="VacancyId" Type="Int32" Nullable="false" />
+          <Property Name="AttachedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Applicant" Relationship="Self.FK__Interview__Appli__5441852A" FromRole="Interview" ToRole="Applicant" />
+          <NavigationProperty Name="Employee" Relationship="Self.fk_Employee" FromRole="Interview" ToRole="Employee" />
+          <NavigationProperty Name="InterviewStatu" Relationship="Self.FK__Interview__Statu__5AEE82B9" FromRole="Interview" ToRole="InterviewStatus" />
+          <NavigationProperty Name="Vacancy" Relationship="Self.FK__Interview__Vacan__5629CD9C" FromRole="Interview" ToRole="Vacancy" />
+          <Property Name="InterviewDate" Type="DateTime" Precision="0" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="InterviewStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Interviews" Relationship="Self.FK__Interview__Statu__5AEE82B9" FromRole="InterviewStatus" ToRole="Interview" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__RoleId__6E01572D" FromRole="Roles" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Vacancy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ClosingDate" Type="DateTime" Precision="0" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="AppliedQuantity" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Vacancy__Departm__73852659" FromRole="Vacancy" ToRole="Department" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Vacancy__Employe__45F365D3" FromRole="Vacancy" ToRole="Employee" />
+          <NavigationProperty Name="Interviews" Relationship="Self.FK__Interview__Vacan__5629CD9C" FromRole="Vacancy" ToRole="Interview" />
+          <NavigationProperty Name="VacancyStatu" Relationship="Self.FK__Vacancy__Status__46E78A0C" FromRole="Vacancy" ToRole="VacancyStatus" />
+        </EntityType>
+        <EntityType Name="VacancyStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Vacancies" Relationship="Self.FK__Vacancy__Status__46E78A0C" FromRole="VacancyStatus" ToRole="Vacancy" />
+        </EntityType>
+        <Association Name="FK__Applicant__Depar__0697FACD">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Applicant" Type="Self.Applicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Applicant">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Applicant__Statu__4D94879B">
+          <End Role="ApplicantStatus" Type="Self.ApplicantStatu" Multiplicity="1" />
+          <End Role="Applicant" Type="Self.Applicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicantStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Applicant">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interview__Appli__5441852A">
+          <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="ApplicantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__Depart__3B75D760">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacancy__Departm__73852659">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vacancy">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__RoleId__6E01572D">
+          <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacancy__Employe__45F365D3">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vacancy">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interview__Statu__5AEE82B9">
+          <End Role="InterviewStatus" Type="Self.InterviewStatu" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InterviewStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interview__Vacan__5629CD9C">
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="1" />
+          <End Role="Interview" Type="Self.Interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacancy">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Interview">
+              <PropertyRef Name="VacancyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacancy__Status__46E78A0C">
+          <End Role="VacancyStatus" Type="Self.VacancyStatu" Multiplicity="1" />
+          <End Role="Vacancy" Type="Self.Vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VacancyStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vacancy">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Applicants" EntityType="Self.Applicant" />
+          <EntitySet Name="ApplicantStatus" EntityType="Self.ApplicantStatu" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Interviews" EntityType="Self.Interview" />
+          <EntitySet Name="InterviewStatus" EntityType="Self.InterviewStatu" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Vacancies" EntityType="Self.Vacancy" />
+          <EntitySet Name="VacancyStatus" EntityType="Self.VacancyStatu" />
+          <AssociationSet Name="FK__Applicant__Depar__0697FACD" Association="Self.FK__Applicant__Depar__0697FACD">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Applicant" EntitySet="Applicants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Applicant__Statu__4D94879B" Association="Self.FK__Applicant__Statu__4D94879B">
+            <End Role="ApplicantStatus" EntitySet="ApplicantStatus" />
+            <End Role="Applicant" EntitySet="Applicants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interview__Appli__5441852A" Association="Self.FK__Interview__Appli__5441852A">
+            <End Role="Applicant" EntitySet="Applicants" />
+            <End Role="Interview" EntitySet="Interviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Depart__3B75D760" Association="Self.FK__Employee__Depart__3B75D760">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacancy__Departm__73852659" Association="Self.FK__Vacancy__Departm__73852659">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Vacancy" EntitySet="Vacancies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__RoleId__6E01572D" Association="Self.FK__Employee__RoleId__6E01572D">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacancy__Employe__45F365D3" Association="Self.FK__Vacancy__Employe__45F365D3">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Vacancy" EntitySet="Vacancies" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Employee" Association="Self.fk_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Interview" EntitySet="Interviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interview__Statu__5AEE82B9" Association="Self.FK__Interview__Statu__5AEE82B9">
+            <End Role="InterviewStatus" EntitySet="InterviewStatus" />
+            <End Role="Interview" EntitySet="Interviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interview__Vacan__5629CD9C" Association="Self.FK__Interview__Vacan__5629CD9C">
+            <End Role="Vacancy" EntitySet="Vacancies" />
+            <End Role="Interview" EntitySet="Interviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacancy__Status__46E78A0C" Association="Self.FK__Vacancy__Status__46E78A0C">
+            <End Role="VacancyStatus" EntitySet="VacancyStatus" />
+            <End Role="Vacancy" EntitySet="Vacancies" />
+          </AssociationSet>
+          <FunctionImport Name="sp_banApplicant">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ChangePassword">
+            <Parameter Name="oldpassword" Mode="In" Type="String" />
+            <Parameter Name="newpassword" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CreateApplicant">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="phonenumber" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="departmentId" Mode="In" Type="Int32" />
+            <Parameter Name="cvfile" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CreateNewEmployee">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="departmentId" Mode="In" Type="Int32" />
+            <Parameter Name="fullname" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="phonenumber" Mode="In" Type="String" />
+            <Parameter Name="roleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CreateVacancy">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="closingdate" Mode="In" Type="DateTime" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+            <Parameter Name="employeeId" Mode="In" Type="Int32" />
+            <Parameter Name="departmentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EditApplicant">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="phonenumber" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="departmentId" Mode="In" Type="Int32" />
+            <Parameter Name="status" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EditEmployee">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="departmentId" Mode="In" Type="Int32" />
+            <Parameter Name="fullname" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="phonenumber" Mode="In" Type="String" />
+            <Parameter Name="roleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EditVacancy">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="closingdate" Mode="In" Type="DateTime" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+            <Parameter Name="departmentID" Mode="In" Type="Int32" />
+            <Parameter Name="status" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_resetPassword">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="pw" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateInfo">
+            <Parameter Name="fullname" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="phonenumber" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AssignVacancy">
+            <Parameter Name="applicantID" Mode="In" Type="Int32" />
+            <Parameter Name="vacancyId" Mode="In" Type="Int32" />
+            <Parameter Name="employeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AcceptCandidate">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="applicantId" Mode="In" Type="Int32" />
+            <Parameter Name="vacancyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RejectCandidate">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="applicantId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ScheduleInterview">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="interviewdate" Mode="In" Type="DateTime" />
+            <Parameter Name="starttime" Mode="In" Type="Time" />
+            <Parameter Name="endtime" Mode="In" Type="Time" />
+            <Parameter Name="applicantId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Applicants">
+            <EntityTypeMapping TypeName="Model.Applicant">
+              <MappingFragment StoreEntitySet="Applicant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="CvFile" ColumnName="CvFile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicantStatus">
+            <EntityTypeMapping TypeName="Model.ApplicantStatu">
+              <MappingFragment StoreEntitySet="ApplicantStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="Model.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Interviews">
+            <EntityTypeMapping TypeName="Model.Interview">
+              <MappingFragment StoreEntitySet="Interview">
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="InterviewDate" ColumnName="InterviewDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="VacancyId" ColumnName="VacancyId" />
+                <ScalarProperty Name="AttachedDate" ColumnName="AttachedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InterviewStatus">
+            <EntityTypeMapping TypeName="Model.InterviewStatu">
+              <MappingFragment StoreEntitySet="InterviewStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Model.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vacancies">
+            <EntityTypeMapping TypeName="Model.Vacancy">
+              <MappingFragment StoreEntitySet="Vacancy">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AppliedQuantity" ColumnName="AppliedQuantity" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VacancyStatus">
+            <EntityTypeMapping TypeName="Model.VacancyStatu">
+              <MappingFragment StoreEntitySet="VacancyStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_banApplicant" FunctionName="Model.Store.sp_banApplicant" />
+          <FunctionImportMapping FunctionImportName="sp_ChangePassword" FunctionName="Model.Store.sp_ChangePassword" />
+          <FunctionImportMapping FunctionImportName="sp_CreateApplicant" FunctionName="Model.Store.sp_CreateApplicant" />
+          <FunctionImportMapping FunctionImportName="sp_CreateNewEmployee" FunctionName="Model.Store.sp_CreateNewEmployee" />
+          <FunctionImportMapping FunctionImportName="sp_CreateVacancy" FunctionName="Model.Store.sp_CreateVacancy" />
+          <FunctionImportMapping FunctionImportName="sp_EditApplicant" FunctionName="Model.Store.sp_EditApplicant" />
+          <FunctionImportMapping FunctionImportName="sp_EditEmployee" FunctionName="Model.Store.sp_EditEmployee" />
+          <FunctionImportMapping FunctionImportName="sp_EditVacancy" FunctionName="Model.Store.sp_EditVacancy" />
+          <FunctionImportMapping FunctionImportName="sp_resetPassword" FunctionName="Model.Store.sp_resetPassword" />
+          <FunctionImportMapping FunctionImportName="sp_UpdateInfo" FunctionName="Model.Store.sp_UpdateInfo" />
+          <FunctionImportMapping FunctionImportName="sp_AssignVacancy" FunctionName="Model.Store.sp_AssignVacancy" />
+          <FunctionImportMapping FunctionImportName="sp_AcceptCandidate" FunctionName="Model.Store.sp_AcceptCandidate" />
+          <FunctionImportMapping FunctionImportName="sp_RejectCandidate" FunctionName="Model.Store.sp_RejectCandidate" />
+          <FunctionImportMapping FunctionImportName="sp_ScheduleInterview" FunctionName="Model.Store.sp_ScheduleInterview" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
